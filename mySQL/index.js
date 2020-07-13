@@ -59,7 +59,7 @@ app.delete('/users/:id', (req, res) => {
   );
 });
 
-//Insert an user
+//Insert user
 app.post('/users', (req, res) => {
   let user = req.body;
   var sql =
@@ -74,6 +74,22 @@ app.post('/users', (req, res) => {
           if (element.constructor == Array)
             res.send('Inserted user id : ' + element[0].id_users);
         });
+      else console.log(err);
+    }
+  );
+});
+
+//Update user
+app.put('/users', (req, res) => {
+  let user = req.body;
+  var sql =
+    'SET @id_users = ?;SET @name = ?;SET @password = ?; \
+  CALL addOrEdit(@id_user,@name,@password);';
+  mysqlConnection.query(
+    sql,
+    [user.id_users, user.name, user.password],
+    (err, rows, fields) => {
+      if (!err) res.send('Updated successfully');
       else console.log(err);
     }
   );
