@@ -11,6 +11,7 @@ const mysqlConnection = mysql.createConnection({
   user: 'root',
   password: 'password',
   database: 'SQL_DB',
+  multipleStatements: true,
 });
 
 mysqlConnection.connect((error) => {
@@ -54,6 +55,26 @@ app.delete('/users/:id', (req, res) => {
     (error, rows, fields) => {
       if (!error) res.send('User deleted successfully');
       else console.log(error);
+    }
+  );
+});
+
+//Insert an user
+app.post('/users', (req, res) => {
+  let user = req.body;
+  var sql =
+    'SET @id_users = ?;SET @name = ?;SET @password = ?; \
+  CALL addOrEdit(@id_users,@name,@password);';
+  mysqlConnection.query(
+    sql,
+    [user.id_users, user.name, user.password],
+    (err, rows, fields) => {
+      if (!err)
+        rows.forEach((element) => {
+          if (element.constructor == Array)
+            res.send('Inserted user id : ' + element[0].id_users);
+        });
+      else console.log(err);
     }
   );
 });
