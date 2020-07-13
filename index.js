@@ -45,3 +45,15 @@ app.get('/users/:id', (req, res) => {
     }
   );
 });
+
+// Delete from DB WHERE id
+app.delete('/users/:id', (req, res) => {
+  mysqlConnection.query(
+    'DELETE FROM users WHERE id_users = ?',
+    [req.params.id],
+    (error, rows, fields) => {
+      if (!error) res.send('User deleted successfully');
+      else console.log(error);
+    }
+  );
+});
