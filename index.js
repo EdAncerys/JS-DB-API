@@ -27,9 +27,21 @@ app.listen(3000, () =>
 
 // CRUD actions
 // Read from DB
-app.get('/users', (res, req) => {
+app.get('/users', (req, res) => {
   mysqlConnection.query('SELECT * FROM users', (error, rows, fields) => {
-    if (!error) console.log(rows);
+    if (!error) res.send(rows);
     else console.log(error);
   });
+});
+
+// Read from DB WHERE id
+app.get('/users/:id', (req, res) => {
+  mysqlConnection.query(
+    'SELECT * FROM users WHERE id_users = ?',
+    [req.params.id],
+    (error, rows, fields) => {
+      if (!error) res.send(rows);
+      else console.log(error);
+    }
+  );
 });
