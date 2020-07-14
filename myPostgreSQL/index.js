@@ -15,7 +15,7 @@ app.get('/users', async (req, res) => {
   }
 });
 
-// GET selected data from db
+// GET select specific data from db
 app.get('/users/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -61,6 +61,23 @@ app.put('/users/:id', async (req, res) => {
 });
 
 // DELETE delete data in db
+app.delete('/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await pool.query('SELECT * FROM users WHERE user_id = $1', [
+      id,
+    ]);
+    const deleteUser = await pool.query(
+      'DELETE FROM users WHERE user_id = $1',
+      [id]
+    );
+    res.json(
+      `User ID: ${user.rows[0].user_id} Name: ${user.rows[0].name} been successfully deleted`
+    );
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 
 const port = process.env.PORT || 3000;
 
