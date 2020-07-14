@@ -7,6 +7,15 @@ app.use(express.json()); // => req.body enable to access clients data
 // Create ROUTES
 // GET all data from db
 
+app.get('/users', async (req, res) => {
+  try {
+    const allUsers = await pool.query('SELECT * FROM users');
+    res.json(allUsers.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 // GET selected data from db
 
 // POST add data to db
