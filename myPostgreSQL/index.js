@@ -6,7 +6,6 @@ app.use(express.json()); // => req.body enable to access clients data
 
 // Create ROUTES
 // GET all data from db
-
 app.get('/users', async (req, res) => {
   try {
     const allUsers = await pool.query('SELECT * FROM users');
@@ -17,7 +16,6 @@ app.get('/users', async (req, res) => {
 });
 
 // GET selected data from db
-
 app.get('/users/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -29,8 +27,8 @@ app.get('/users/:id', async (req, res) => {
     console.error(err.message);
   }
 });
-// POST add data to db
 
+// POST add data to db
 app.post('/users', async (req, res) => {
   try {
     const { name, password } = req.body;
@@ -48,7 +46,21 @@ app.post('/users', async (req, res) => {
     console.error(err.message);
   }
 });
+
 // PUT update data in db
+app.put('/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, password } = req.body;
+    const updateUser = await pool.query(
+      'UPDATE users SET name = $1, password = $2 WHERE user_id = $3',
+      [name, password, id]
+    );
+    res.json('User been updated successfully');
+  } catch (err) {
+    console.log(err.message);
+  }
+});
 
 // DELETE delete data in db
 
