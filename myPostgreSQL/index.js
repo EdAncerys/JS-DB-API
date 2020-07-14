@@ -18,6 +18,17 @@ app.get('/users', async (req, res) => {
 
 // GET selected data from db
 
+app.get('/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await pool.query('SELECT * FROM users WHERE user_id = $1', [
+      id,
+    ]);
+    res.json(user.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 // POST add data to db
 
 app.post('/users', async (req, res) => {
