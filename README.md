@@ -9,4 +9,6 @@ Creating DB and processing all CRUD actions from UI.
 ## Tech Stack:
 
 - [MySQL](https://dev.mysql.com/doc/mysql-getting-started/en/) MySQL is the world's most popular open-source database.
-- [Node.js](https://dev.mysql.com/doc/mysql-getting-started/en/) Node.js is an open-source, cross-platform, JavaScript runtime environment that executes JavaScript code outside a web browser..
+- [PSQL](https://www.postgresql.org/) PostgreSQL is a powerful, open source object-relational database system with over 30 years of active development.
+- [Node.js](https://dev.mysql.com/doc/mysql-getting-started/en/) Node.js is an open-source, cross-platform, JavaScript runtime environment that executes JavaScript code outside a web browser.
+- [Insomnia](https://insomnia.rest/) Leading Open Source API Client, and Collaborative API Design Platform for GraphQL, and REST.
