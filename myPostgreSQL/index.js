@@ -22,7 +22,8 @@ app.get('/users/:id', async (req, res) => {
     const user = await pool.query('SELECT * FROM users WHERE user_id = $1', [
       id,
     ]);
-    res.json(user.rows[0]);
+    if (user.rows.length == 0) res.json('Error. No such a user');
+    else res.json(user.rows[0]);
   } catch (err) {
     console.error(err.message);
   }
@@ -32,16 +33,13 @@ app.get('/users/:id', async (req, res) => {
 app.post('/users', async (req, res) => {
   try {
     const { name, password } = req.body;
-    const newUser = await pool
-      .query('INSERT INTO users (name, password) VALUES ($1, $2) RETURNING *', [
-        name,
-        password,
-      ])
-      .then((message) => {
-        console.log('User added successfully');
-        console.log('User added successfully');
-      });
-    res.json('User Added Successfully');
+    const newUser = await pool.query(
+      'INSERT INTO users (name, password) VALUES ($1, $2) RETURNING *',
+      [name, password]
+    );
+    res.json(
+      `User been added successfully. ID: ${newUser.rows[0].user_id} Name: ${name}`
+    );
   } catch (err) {
     console.error(err.message);
   }
@@ -56,7 +54,7 @@ app.put('/users/:id', async (req, res) => {
       'UPDATE users SET name = $1, password = $2 WHERE user_id = $3',
       [name, password, id]
     );
-    res.json('User been updated successfully');
+    res.json(`User been updated successfully. ID: ${id} Name: ${name}`);
   } catch (err) {
     console.log(err.message);
   }
