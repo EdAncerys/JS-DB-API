@@ -5,7 +5,11 @@ const pool = new Pool({
   password: '',
   database: 'user_database',
   host: 'localhost',
-  posr: 5432,
+});
+
+pool.connect((err) => {
+  if (!err) console.error('DB connection successful');
+  else console.error('Error connecting to client');
 });
 
 module.exports = pool;
