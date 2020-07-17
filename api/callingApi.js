@@ -101,3 +101,17 @@ makeRequest('Google')
   .catch((err) => {
     console.log(err);
   });
+
+// Async await version
+async function doWork() {
+  try {
+    const response = await makeRequest('Google');
+    console.log('Response Received');
+    const processedResponse = await processRequest(response);
+    console.log(processedResponse);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+doWork();
