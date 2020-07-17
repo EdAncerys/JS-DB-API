@@ -22,3 +22,21 @@ function handleErr(err) {
   );
   return resp;
 }
+
+// Promises
+let promise = new Promise((resolve, reject) => {
+  let condition = true;
+  if (condition) {
+    resolve('Success');
+  } else {
+    reject('Failed');
+  }
+});
+
+promise
+  .then((message) => {
+    console.log('Promise resolved ' + message);
+  })
+  .catch((err) => {
+    console.log('Promise rejected ' + err);
+  });
