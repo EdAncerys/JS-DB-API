@@ -45,7 +45,7 @@ promise
 let userLeft = false;
 let userRight = false;
 
-function tutorialPromise() {
+tutorialPromise = () => {
   return new Promise((resolve, reject) => {
     if (userLeft) {
       reject({
@@ -61,7 +61,7 @@ function tutorialPromise() {
       resolve('This Promise been resolved');
     }
   });
-}
+};
 
 tutorialPromise()
   .then((message) => {
@@ -69,4 +69,35 @@ tutorialPromise()
   })
   .catch((error) => {
     console.log(error.name + ' ' + error.message);
+  });
+
+// Async Await in JS
+makeRequest = (location) => {
+  return new Promise((resolve, reject) => {
+    console.log(`Making Request to ${location}`);
+    if (location === 'Google') {
+      resolve('Google returns data back');
+    } else {
+      reject('We can only talk to Google');
+    }
+  });
+};
+
+processRequest = (response) => {
+  return new Promise((resolve, reject) => {
+    console.log('Prosessing Request');
+    resolve(`Extra information: ${response}`);
+  });
+};
+
+makeRequest('Google')
+  .then((response) => {
+    console.log('Response Received');
+    return processRequest(response);
+  })
+  .then((processedResponse) => {
+    console.log(processedResponse);
+  })
+  .catch((err) => {
+    console.log(err);
   });
